@@ -76,10 +76,10 @@ class PeerClientThread(threading.Thread):
     def send_file_part(self, filepath):
         """ function for sending file at 'filepath' through socket to client """
         file = open(filepath, 'rb')
-        chunk = file.read(1024)
-        print('Sending...')
+        chunk = file.read(3000)
+        # print('Sending...')
         while chunk:
             self.client_conn.send(chunk)
-            chunk = file.read(1024)
+            chunk = file.read(3000)
         file.close()
-        print("Done Sending File!")
+        # print("Done Sending File!")

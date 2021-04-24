@@ -37,22 +37,22 @@ class PeerServerThread(threading.Thread):
         download_info = json.dumps(download_info).encode()
         self.sock.sendall(download_info)
         print("Download info sent: {}".format(download_info))
+        print("Recieving parts...")
 
         filepath = self.temp_dir + '/part{}'.format(self.part_num)
-        self.receive_file_part(filepath)
+        self.cleanup(filepath)
         self.close_connection()
 
-    def receive_file_part(self, filepath):
+    def cleanup(self, filepath):
         """ receive file part from server and write at 'filepath' """
         size = 1024
-        print("Receiving File part...")
         file = open(filepath, 'wb')
         chunk = self.sock.recv(size)
         while chunk:
             file.write(chunk)
             chunk = self.sock.recv(size)
         file.close()
-        print("Done Receiving!")
+        print("DONE !")
 
     def close_connection(self):
         """ Closes connection """
